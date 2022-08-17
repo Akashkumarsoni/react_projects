@@ -1,25 +1,3 @@
-// import React from 'react'
-// import { Link } from 'react-router-dom';
-// import './App.css';
-
-// const Nav = (props) => {
-//   return (
-//     <div className='nav'>
-
-//         <div className='logofinal'>
-//           MyShop
-//         </div>
-//         <ul>
-//             <li><Link className='link' to="/"><b>Home</b></Link></li>
-//             <li><Link className='link'to="/cart"><b>Cart ({props.cartcount})</b></Link></li>
-//             <li><Link className='link'to="/contact"><b>Contact</b></Link></li>
-//         </ul>
-//     </div>
-//   )
-// }
-
-// export default Nav
-
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -39,6 +17,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Link, useNavigate } from "react-router-dom";
 import { products } from "./Data";
 import {contxtname} from "./Contxt";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Switch, Tooltip } from "@mui/material";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -90,6 +71,26 @@ export default function PrimarySearchAppBar(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const logoutbtn=()=>{
+    if(window.confirm("Do you really want to logout!")){
+      contxtobj.setLogin("")
+    }
+  }
+const changemode=(e)=>{
+  if(e.target.checked){
+    contxtobj.setBgs("#393E46");
+    contxtobj.setTxts("white");
+    contxtobj.setBgsBox("#222831");
+  }
+  else{
+    contxtobj.setBgs("white");
+    contxtobj.setTxts("black");
+    contxtobj.setBgsBox("white");
+  }
+}
+  const loginbtn=()=>{
+    navigate('/login');
+  }
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -124,8 +125,8 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      
+      <MenuItem onClick={handleMenuClose}>Login</MenuItem>
     </Menu>
   );
 
@@ -168,7 +169,21 @@ export default function PrimarySearchAppBar(props) {
           <p>Cart</p>
         </Link>
       </MenuItem>
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
+      
+      {contxtobj.login === ''?
+      <MenuItem onClick={loginbtn}>
+      <IconButton
+        size="large"
+        aria-label="account of current user"
+        aria-controls="primary-search-account-menu"
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <PersonOutlineIcon/>
+      </IconButton>
+      <p>Login</p>
+    </MenuItem>:
+      <MenuItem onClick={logoutbtn}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -176,30 +191,44 @@ export default function PrimarySearchAppBar(props) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <LogoutIcon />
         </IconButton>
-        <p>Profile</p>
-      </MenuItem> */}
+        <p>Logout</p>
+      </MenuItem>}
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+         <Switch onChange={changemode}  color="default" />
+        </IconButton>
+        <p>Mode</p>
+      </MenuItem>
     </Menu>
   );
   const search_products = (e) => {
     navigate("/searched");
     var searchtext = e.target.value;
     products.map((i) => {
-      if (i.name.includes(searchtext)) {
+      if (i.name.toLowerCase().includes(searchtext)) {
         search_val = [...search_val, i];
         console.log(search_val)
         contxtobj.setSearch(search_val);
       }
     });
   };
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="fixed"
         sx={{
           position: "fixed",
-          backgroundColor: "white",
+          backgroundColor: contxtobj.bgs,
           overflow: "hidden",
           top: "0",
           marginBottom: "70px",
@@ -223,18 +252,20 @@ export default function PrimarySearchAppBar(props) {
 
           <Search>
             <SearchIconWrapper>
-              <SearchIcon sx={{ color: "black", cursor: "pointer" }} />
+              <SearchIcon sx={{ color: contxtobj.txts, cursor: "pointer" }} />
             </SearchIconWrapper>
             <StyledInputBase
-              sx={{ color: "black" }}
+              sx={{ color: contxtobj.txts }}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
               onKeyUp={search_products}
+              autoFocus
             />
           </Search>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Tooltip title="Home">
             <IconButton
               size="large"
               aria-label=" new notifications"
@@ -244,6 +275,8 @@ export default function PrimarySearchAppBar(props) {
                 <HomeIcon sx={{ color: "#FBB03B" }} />
               </Link>
             </IconButton>
+          </Tooltip>
+          <Tooltip title='Cart'>
             <IconButton
               size="large"
               aria-label="new notifications"
@@ -254,18 +287,50 @@ export default function PrimarySearchAppBar(props) {
                   <ShoppingCartIcon sx={{ color: "#FBB03B" }} />
                 </Link>
               </Badge>
-            </IconButton>
-            {/* <IconButton
+            </IconButton></Tooltip>
+            {contxtobj.login === '' ?
+            <Tooltip title="Login">
+            <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={loginbtn}
               color="inherit"
             >
-              <AccountCircle sx={{ color: "#FBB03B" }} />
-            </IconButton> */}
+              <PersonOutlineIcon sx={{color:"#FBB03B"}}/>
+            
+            </IconButton>
+            </Tooltip>
+            :
+            <Tooltip title="Logout">
+              <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={logoutbtn}
+              color="inherit"
+            >
+              <LogoutIcon sx={{color:"#FBB03B"}} />
+            </IconButton>
+            </Tooltip>
+            }
+           <Tooltip title="Theme Mode">
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              
+              color="inherit"
+            >
+              <Switch onChange={changemode}  color="warning" />
+            </IconButton></Tooltip>
+            
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

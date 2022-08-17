@@ -17,6 +17,7 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { SettingsInputAntennaTwoTone } from "@mui/icons-material";
+import { contxtname } from "./Contxt";
 
 const theme = createTheme();
 
@@ -48,7 +49,7 @@ export default function Checkout(props) {
   const [card_number, setCardNumber] = React.useState();
   const [card_exp, setCardExp] = React.useState();
   const [card_cvv, setCVV] = React.useState();
-
+  const contxtobj = React.useContext(contxtname);
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -103,38 +104,39 @@ export default function Checkout(props) {
         component="h1"
         variant="h4"
         align="center"
-        sx={{ marginTop: "100px", fontWeight: "bolder" }}
+        sx={{ marginTop: "100px", fontWeight: "bolder",color:contxtobj.txts}}
       >
         Checkout
       </Typography>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+   
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 },color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs }}
         >
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5, }}>
             {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+              <Step key={label} style={{color:contxtobj.txts}}>
+                <StepLabel ><Typography style={{color:contxtobj.txts}}>{label}</Typography></StepLabel>
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <React.Fragment sx={{color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs}}>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs}} >
                   Thank you for your order.
                 </Typography>
-                <Typography variant="subtitle1">
+                <Typography variant="subtitle1" sx={{color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs}}>
                   Your order number is #
                   {(Math.random() * 1000000000).toFixed("")}. We have emailed
                   your order confirmation, and will send you an update when your
                   order has shipped.
                 </Typography>
-                <Typography>
+                <Typography sx={{color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs}}>
                   Continue shopping{" "}
                   <p style={{ cursor: "pointer" }}>
-                    <NavLink to="/">click here</NavLink>
+                    <NavLink to="/" style={{color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs}}>click here</NavLink>
                   </p>
                 </Typography>
               </React.Fragment>

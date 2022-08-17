@@ -1,23 +1,25 @@
 import "./App.css";
 import Home from "./Home";
-import Nav from "./Nav";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Cart from "./Cart";
-import Contact from "./Contact";
 import { products } from "./Data";
 import SearchContent from "./SearchContent";
 import Checkout from "./Checkout";
-import contxtname from "./Contxt";
-
+import Login from "./Login";
+import { useContext } from "react";
+import {contxtname} from "./Contxt";
+import Nav from "./Nav";
 
 const App = () => {
+  const contxtobj = useContext(contxtname);
+
   const [state,setState] = React.useState({
-    cartvalues: [],
+      cartvalues: [],
       additem: 0,
       emptycartar: [],
+      login:""
   })
-const contxtobj = React.useContext(contxtname);
 
   const addtocart = (e) => {
     let cartarray;
@@ -81,26 +83,29 @@ const contxtobj = React.useContext(contxtname);
     })
 
   }
+  
     return (
-      <>
-        <Nav cartcount={state.cartvalues.length}/>
+      <div style={{backgroundColor:contxtobj.bgs,width:"100%",minHeight:"100vh",maxHeight:"max-content",
+      padding:"10px 0px"}}>
+      <Nav cartcount={state.cartvalues.length}/>
         <Routes>
           <Route path="/" element={<Home addtocartfunc={addtocart} />} />
           <Route
             path="/cart"
             element={
               <Cart
+              
                 sendingToCart={state.cartvalues}
                 emptyToCart={emptycartarea}
                 deletethis={deleteit}
               />
             }
           />
-          <Route path="/searched" element={<SearchContent addtocartfunc={addtocart} />}/>
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/checkout" element={<Checkout empcart={emptycartarea} />}/>
+          <Route path="/searched" element={<SearchContent  addtocartfunc={addtocart} />}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/checkout" element={<Checkout  empcart={emptycartarea} />}/>
         </Routes>
-      </>
+      </div>
     );
 }
 

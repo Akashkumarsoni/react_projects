@@ -4,8 +4,10 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { contxtname } from './Contxt';
 
 export default function PaymentForm(props) {
+  const contxtobj = React.useContext(contxtname);
   const name =(e)=>{
     props.card_name(e.target.value);
   }
@@ -26,6 +28,13 @@ export default function PaymentForm(props) {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <TextField
+          sx={{"& .MuiInputBase-root": {
+            color:contxtobj.txts
+          },
+          "& .MuiFormLabel-root": {
+          color:contxtobj.txts
+          }
+            }}
             required
             id="cardName"
             label="Name on card"
@@ -37,6 +46,13 @@ export default function PaymentForm(props) {
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
+          sx={{"& .MuiInputBase-root": {
+            color:contxtobj.txts
+          },
+          "& .MuiFormLabel-root": {
+          color:contxtobj.txts
+          }
+            }}
             required
             id="cardNumber"
             label="Card number"
@@ -49,6 +65,13 @@ export default function PaymentForm(props) {
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
+          sx={{"& .MuiInputBase-root": {
+            color:contxtobj.txts
+          },
+          "& .MuiFormLabel-root": {
+          color:contxtobj.txts
+          }
+            }}
             required
             id="expDate"
             label="Expiry date"
@@ -61,6 +84,13 @@ export default function PaymentForm(props) {
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
+          sx={{"& .MuiInputBase-root": {
+            color:contxtobj.txts
+          },
+          "& .MuiFormLabel-root": {
+          color:contxtobj.txts
+          }
+            }}
             required
             id="cvv"
             label="CVV"
@@ -74,7 +104,7 @@ export default function PaymentForm(props) {
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
+            control={<Checkbox color="warning" name="saveCard" value="yes" />}
             label="Remember credit card details for next time"
           />
         </Grid>

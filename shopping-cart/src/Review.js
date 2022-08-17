@@ -4,6 +4,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import { contxtname } from './Contxt';
 
 
 
@@ -11,6 +12,7 @@ import Grid from '@mui/material/Grid';
 
 export default function Review(props) {
   const addresses = [props.add, props.cityname, props.state, props.pin, props.country];
+  const contxtobj = React.useContext(contxtname);
 const payments = [
   { name: 'Card type', detail: 'Visa' },
   { name: 'Card holder', detail: props.card_uname },
@@ -18,14 +20,14 @@ const payments = [
   { name: 'Expiry date', detail: props.card_exps },
 ];
   return (
-    <React.Fragment>
+    <React.Fragment sx={{color:contxtobj.txts,backgroundColor:contxtobj.bgsboxs}}>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
         {props.products.map((product) => (
-          <ListItem key={product.id} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.quan} />
+          <ListItem key={product.id} sx={{ py: 1, px: 0,color:contxtobj.txts }}>
+            <ListItemText  primary={product.name}  secondary={<Typography sx={{color:contxtobj.txts}} variant="body2">{product.quan}</Typography>}/>
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}

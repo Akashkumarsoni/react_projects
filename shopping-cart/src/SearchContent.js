@@ -11,12 +11,14 @@ const SearchContent = (props) => {
     <>
       {" "}
       <p className="headourpro" style={{ marginTop: "100px",textAlign:"center",fontSize:"25px",fontWeight:"bolder" }}>
-        <span>Searched</span>&nbsp;<span>products</span>
+        <span>Top searched</span>&nbsp;<span style={{color:contxtobj.txts}}>products</span>
       </p>
       <div className="allcardsofproducts" style={{ marginTop: "10px" }}>
         {contxtobj.search.map((i) => {
           return (
             <ProductCard
+            bg={contxtobj.bgsboxs}
+              txt={contxtobj.txts}
               cprice={i.cprice}
               ids={i.id}
               name={i.name}

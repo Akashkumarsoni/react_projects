@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import { Link, useNavigate } from "react-router-dom";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { contxtname } from "./Contxt";
+import { IconButton, Tooltip } from "@mui/material";
 const Cart = (props) => {
   const navigate = useNavigate();
+  const contxtobj = useContext(contxtname);
   const [state, setState] = React.useState({
     total: 0,
     cart: 0,
@@ -64,48 +68,52 @@ const Cart = (props) => {
   };
   const proceed = () => {
     navigate("/checkout");
-    // props.emptyToCart();
-    // alert("Thanks for shopping with us!!");
   };
   const emptycart = () => {
     if (window.confirm("Do you really want to empty this cart")) {
       props.emptyToCart();
     }
   };
+
+
   return (
-    <div className="maincartpage">
-      <div className="App">
+    <div style={{width:"100%",backgroundColor:contxtobj.bgs}}>
+    <div className="maincartpage" style={{backgroundColor:contxtobj.bgs}}>
+      <div className="App"style={{backgroundColor:contxtobj.bgs}} >
         {props.sendingToCart.length == 0 ? (
-          <h1>Your cart is empty</h1>
+          <h1 style={{color:contxtobj.txts}}>Your cart is empty</h1>
         ) : (
           <div>
-            <h2 className="contactushead">Your Cart</h2>
+            <h2 style={{color:contxtobj.txts}} className="contactushead">Your Cart</h2>
             <div className="carttablediv">
                 {props.sendingToCart.map((i) => {
                   return (
                     <>
-                    <div className="cartitemblock">
+                    <div className="cartitemblock" style={{backgroundColor:contxtobj.bgsboxs}}>
                       <div className="cartimg">
                         <img className="cartimg" alt="" src={i.pic} />
                       </div>
                       <div className="cartcontent">
-                        <b style={{fontSize:"20px"}}>{i.name}</b>
+                        <b style={{fontSize:"20px",color:contxtobj.txts}}>{i.name}</b>
                         
-                        <p><span>Price:  $</span><span>{i.price}</span></p>
+                        <p style={{color:contxtobj.txts}}><span>Price:  $</span><span>{i.price}</span></p>
                         <div className="quantity">
-                          <p style={{ marginTop: "-1px" }}>Quantity:&nbsp;&nbsp;&nbsp;</p>
-                          <div>
-                            <button onClick={minusquan} id={i.id}>
+                          <p style={{ marginTop: "-1px",color:contxtobj.txts }}>Quantity:&nbsp;&nbsp;&nbsp;</p>
+                          <div style={{display:"flex"}}>
+                            <button onClick={minusquan} id={i.id} style={{marginRight:"15px",cursor:"pointer",height:"30px",fontSize:"25px",fontWeight:"bolder"}}>
                               -
                             </button>
-                            <span>{i.quan}</span>
-                            <button onClick={addquan} id={i.id}>
+                            {/* <IconButton onClick={minusquan}>
+                            <RemoveCircleOutlineIcon   sx={{ color: "#FBB03B" }} /></IconButton> */}
+                            <b style={{color:contxtobj.txts}}>{i.quan}</b>
+                            {/* <IconButton onClick={addquan}><RemoveCircleOutlineIcon   sx={{ color: "#FBB03B" }} /></IconButton> */}
+                            <button onClick={addquan} id={i.id} style={{marginLeft:"15px",cursor:"pointer",height:"30px",fontSize:"25px",fontWeight:"bolder"}}>
                               +
                             </button>
                           </div>
                         </div>
                         <button className="deleteit" id={i.id} onClick={props.deletethis}>
-                        Delete
+                        Remove from cart
                       </button>
                       </div>
                       
@@ -121,10 +129,13 @@ const Cart = (props) => {
               </div>
               {state.show == 1 ? (
                 <>
-                  <p>{state.total}</p>
-                  <Link to='/checkout' state={{cartarr:props.sendingToCart,ttl:state.total}}><div onClick={proceed} className="proceedtocheckout">
+                  <p style={{color:contxtobj.txts,fontWeight:"bolder"}}>{state.total}</p>
+                  {contxtobj.login === ''?<><Link to='/login'><div className="proceedtocheckout">
+                    Please login first{" "}
+                  </div></Link></>:<Link to='/checkout' state={{cartarr:props.sendingToCart,ttl:state.total}}><div onClick={proceed} className="proceedtocheckout">
                     Proceed to checkout{" "}
-                  </div></Link>
+                  </div></Link>}
+                  
                 </>
               ) : (
                 <>
@@ -137,6 +148,7 @@ const Cart = (props) => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

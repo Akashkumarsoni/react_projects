@@ -4,20 +4,21 @@ import ProductCard from "./ProductCard";
 import React from "react";
 import MyCarousel from "./Carousel";
 import ProductCarousel from "./ProductCarousel";
+import { contxtname } from "./Contxt";
 
 const Home = (props) => {
-
+const contxtobj = React.useContext(contxtname)
   return (
-    <>
+    <div style={{backgroundColor:contxtobj.bgs}}>
       <MyCarousel />
       <ProductCarousel />
-      <h1 style={{ textAlign: "center" }}>Category your style</h1>
+      <h1 style={{ textAlign: "center",color:contxtobj.txts }}>Category your style</h1>
       <img
       style={{width:"100%"}}
         alt=""
         src="https://admintcns.wforwoman.com/commonsection/1654668501AURELIA-Sets-and-Dresses.jpg"
       />
-      <h1 style={{ textAlign: "center" }}>Top deals with us</h1>
+      <h1 style={{ textAlign: "center",color:contxtobj.txts }}>Top deals with us</h1>
       <img
       style={{width:"100%"}}
         alt=""
@@ -26,12 +27,14 @@ const Home = (props) => {
 
       <div className="ourproducts">
         <p className="headourpro">
-          <span>Trending</span>&nbsp;<span>products</span>
+          <span>Trending</span>&nbsp;<span style={{color:contxtobj.txts}}>products</span>
         </p>
         <div className="allcardsofproducts">
           {products.map((i) => {
             return (
               <ProductCard
+              bg={contxtobj.bgsboxs}
+              txt={contxtobj.txts}
               cprice={i.cprice}
                 ids={i.id}
                 name={i.name}
@@ -58,7 +61,7 @@ const Home = (props) => {
         </span>
         <h4>© Copyright 2022 : By Shopsy</h4>
       </div>
-    </>
+    </div>
   );
 };
 

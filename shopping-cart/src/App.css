@@ -260,8 +260,8 @@
 }
 
 .addtocartbtn:hover{
-  color: black;
-  background-color: white;
+  /* color: red;
+  background-color: black; */
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -324,9 +324,11 @@
   padding: 5px;
   cursor: pointer;
   border: none;
+  background-color: #FBB03B;
 }
 .deleteit:hover{
-  background-color: #FBB03B;
+  background-color: #fb613b;
+  color:white;
   cursor: pointer;
 }
 .maincartpage{
@@ -352,4 +354,65 @@
 .cartcontent{
   margin-top: 25px;
   margin-left: 30px;
+}
+
+.logindiv{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  padding-bottom: 6vw;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px orange;
+}
+.inpfield{
+  outline: #FBB03B;
+  border: 2px solid  #FBB03B;
+  padding-right: 3vw;
+  padding-left: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 20px;
+  border-radius: 6px;
+  margin: 15px;
+}
+.loginbtn{
+  background-color: #FBB03B;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 8px 25px;
+  cursor: pointer;
+}
+
+.loginbtn:hover{
+  background-color: #e39516;
+}
+.loginhead{
+  font-size: 25px;
+  color:  black;
+  
+}
+.loginbox{
+  /* background-color: #FBB03B; */
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noaccount{
+  cursor: pointer;
+  color: blue;
+}
+.noaccount:hover{
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(16, 16, 124);
+  text-underline-offset: revert-layer;
 }

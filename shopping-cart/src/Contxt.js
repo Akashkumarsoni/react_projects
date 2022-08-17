@@ -1,6 +1,10 @@
 import React from "react";
 export const contxtname = React.createContext();
 const Contxt = (props) => {
+  const [login,setLogin] = React.useState('');
+  const [bgs,setBgs] = React.useState('white');
+  const [bgsboxs,setBgsBox] = React.useState('white');
+  const [txts,setTxts] = React.useState('black');
   const [search, setSearch] = React.useState([
     {
       id: "001",
@@ -32,7 +36,18 @@ const Contxt = (props) => {
     },
   ]);
   return (
-    <contxtname.Provider value={{ search: search, setSearch: setSearch }}>
+    <contxtname.Provider value={
+      { search: search, 
+      setSearch: setSearch,
+      login:login,
+      setLogin:setLogin,
+      bgs:bgs,
+      setBgs:setBgs,
+      bgsboxs:bgsboxs,
+      setBgsBox:setBgsBox,
+      txts:txts,
+      setTxts:setTxts }
+      }>
       {props.children}
     </contxtname.Provider>
   );
