@@ -1,0 +1,22 @@
+.Counter{
+  padding: 50px;
+}
+.numbers{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 100px;
+  align-items: center;
+}
+.numtogg{
+  display: flex;
+  width: 600px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+.themechanger{
+  height: 40px;
+  width: 150px;
+  cursor: pointer;
+}
